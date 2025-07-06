@@ -4,6 +4,7 @@ import tailwindcss from '@tailwindcss/vite';
 import { VitePWA } from 'vite-plugin-pwa';
 
 export default defineConfig({
+  base: '/NextDevPath/', 
   plugins: [
     react(),
     tailwindcss(),
@@ -12,10 +13,11 @@ export default defineConfig({
       manifest: {
         name: 'NextDevPath',
         short_name: 'DevPath',
-        start_url: '/',
+       start_url: '/NextDevPath/',
+
         display: 'standalone',
         background_color: '#000000',
-        theme_color: '#3b82f6', // Tailwind blue
+        theme_color: '#3b82f6',
         icons: [
           {
             src: '/pwa-icon-192.png',
@@ -32,3 +34,5 @@ export default defineConfig({
     }),
   ],
 });
+ 
+
