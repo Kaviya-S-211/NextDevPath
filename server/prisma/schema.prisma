@@ -1,0 +1,56 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  email     String   @unique
+  password  String
+  createdAt DateTime @default(now())
+    plan      String   @default("free")  
+
+
+   sessions     RoadmapSession[]
+  enquiries    Enquiry[]
+  testimonials Testimonial[]
+}
+
+model RoadmapSession {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  skills    String
+  roadmap   Json
+  createdAt DateTime @default(now())
+
+  userId String? @db.ObjectId
+  user   User?   @relation(fields: [userId], references: [id])
+}
+
+model Enquiry {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  email     String
+  message   String
+  createdAt DateTime @default(now())
+
+   userId String? @db.ObjectId
+  user   User?   @relation(fields: [userId], references: [id])
+
+  @@map("enquiries")
+}
+
+model Testimonial {
+  id        String   @id @default(auto()) @map("_id") @db.ObjectId
+  name      String
+  message   String
+  createdAt DateTime @default(now())
+
+  userId String? @db.ObjectId
+  user   User?   @relation(fields: [userId], references: [id])
+
+  @@map("testimonials")
+}
